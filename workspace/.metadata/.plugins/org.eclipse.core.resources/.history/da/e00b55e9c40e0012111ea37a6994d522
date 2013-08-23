@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2009 Xilinx, Inc.  All rights reserved.
+ *
+ * Xilinx, Inc.
+ * XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS" AS A
+ * COURTESY TO YOU.  BY PROVIDING THIS DESIGN, CODE, OR INFORMATION AS
+ * ONE POSSIBLE   IMPLEMENTATION OF THIS FEATURE, APPLICATION OR
+ * STANDARD, XILINX IS MAKING NO REPRESENTATION THAT THIS IMPLEMENTATION
+ * IS FREE FROM ANY CLAIMS OF INFRINGEMENT, AND YOU ARE RESPONSIBLE
+ * FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE FOR YOUR IMPLEMENTATION.
+ * XILINX EXPRESSLY DISCLAIMS ANY WARRANTY WHATSOEVER WITH RESPECT TO
+ * THE ADEQUACY OF THE IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO
+ * ANY WARRANTIES OR REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE
+ * FROM CLAIMS OF INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ */
+
+
+#include <stdint.h>
+#include <stdio.h>
+#include "platform.h"
+#include "xil_io.h"
+#include "xparameters.h"
+
+#define READ_KEYBOARD	(0x87000000)
+#define SS_BASEADDR		XPAR_SEVSEG_DISP_12BITS_BASEADDR
+
+// Defines handling 7seg
+#define SEVSEG_CATHODES (0x000000FF)
+#define SEVSEG_ANODES	(0x00000F00)
+#define SbnAnodes		8
+
+// Variables handling 7seg
+u32 score[4];
+volatile u32 sevseg;
+static const u32 bin_to_sevseg[10] = {0x000000C0, 0x000000F9, 0x000000A4,
+									  0x000000B0, 0x00000099, 0x00000092,
+									  0x00000082, 0x000000F8, 0x00000080,
+									  0x00000090};
+
+int main()
+{
+    init_platform();
+
+    print("Hello PS2 Keyboard\n\r");
+
+    u32 kb_old, kb;
+    kb_old = kb = Xil_In32(READ_KEYBOARD);
+    xil_printf("Keyboard status: %llu\n\r", (long long int)kb);
+
+    while(1){
+    	kb = Xil_In32(READ_KEYBOARD);
+    	if(kb != kb_old){
+    	    xil_printf("Keyboard status: %llu\n\r", (long long int)kb);
+    	    kb_old = kb;
+    	}
+    }
+
+    cleanup_platform();
+
+    return 0;
+}
+int is_1(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000001);
+}
+int is_2(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000002);
+}
+int is_3(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000004);
+}
+int is_4(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000008);
+}
+int is_q(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000010);
+}
+int is_a(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000020);
+}
+int is_t(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000040);
+}
+int is_y(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000080);
+}
+int is_o(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000100);
+}
+int is_p(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000200);
+}
+int is_6(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000400);
+}
+int is_9(){
+	return(Xil_In32(READ_KEYBOARD) & 0x00000800);
+}
+
+int update_sevseg_score(){
+/*	for(int i = 0; i < 4; ++i){
+		sevseg = (i & msk_Anodes)
+		Xil_Out32()
+	}
+*/
+	//Xil_Out32(XPAR_SEVSEG_DISP_12BITS_BASEADDR, sevseg_score);
+	return 1;
+}

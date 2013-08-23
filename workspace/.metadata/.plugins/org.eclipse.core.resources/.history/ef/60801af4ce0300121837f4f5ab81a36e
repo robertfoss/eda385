@@ -1,0 +1,19 @@
+
+#ifndef PS2_INTR_EXAMPLE_H		/* prevent circular inclusions */
+#define PS2_INTR_EXAMPLE_H		/* by using protection macros */
+
+#include "xparameters.h"
+#include "xstatus.h"
+#include "xintc.h"
+#include "stdio.h"
+#include "xps2.h"
+#include "xil_exception.h"
+
+int Ps2IntrExample(XIntc* IntcInstPtr, XPs2* Ps2InstPtr,
+			u16 Ps2DeviceId, u16 Ps2IntrId);
+
+static void Ps2IntrHandler(void *CallBackRef, u32 Event, u32 EventData);
+
+static int Ps2SetupIntrSystem(XIntc* IntcInstPtr, XPs2 *Ps2Ptr, u16 IntrId);
+
+#endif

@@ -1,0 +1,36 @@
+
+**** Build of configuration Debug for project peripheral_tests_0 ****
+
+make all 
+Building file: ../src/ps2_intr_test.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../standalone_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/ps2_intr_test.d" -MT"src/ps2_intr_test.d" -o"src/ps2_intr_test.o" "../src/ps2_intr_test.c"
+../src/ps2_intr_test.c: In function 'Ps2IntrExample':
+../src/ps2_intr_test.c:206:6: warning: variable 'BytesReceived' set but not used [-Wunused-but-set-variable]
+../src/ps2_intr_test.c:205:6: warning: unused variable 'BytesSent' [-Wunused-variable]
+Finished building: ../src/ps2_intr_test.c
+' '
+Building target: peripheral_tests_0.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,--no-relax -Wl,-T -Wl,../src/lscript.ld -L../../standalone_bsp_0/microblaze_0/lib -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -o"peripheral_tests_0.elf"  ./src/ps2_intr_example.o ./src/ps2_intr_test.o ./src/testperiph.o ./src/xgpio_tapp_example.o ./src/xintc_tapp_example.o ./src/xtmrctr_intr_example.o ./src/xtmrctr_selftest_example.o ./src/xuartlite_selftest_example.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: peripheral_tests_0.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size peripheral_tests_0.elf  |tee "peripheral_tests_0.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  26446	    468	   2544	  29458	   7312	peripheral_tests_0.elf
+Finished building: peripheral_tests_0.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck peripheral_tests_0.elf -hw ../../only_ps2_interface_hw_platform/system.xml -pe microblaze_0  |tee "peripheral_tests_0.elf.elfcheck"
+elfcheck
+Xilinx EDK 14.2 Build EDK_P.28xd
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../only_ps2_interface_hw_platform/system.xml -pe
+microblaze_0 peripheral_tests_0.elf 
+
+ELF file	: peripheral_tests_0.elf
+elfcheck passed.
+Finished building: peripheral_tests_0.elf.elfcheck
+' '

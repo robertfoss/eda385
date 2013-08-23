@@ -1,0 +1,19 @@
+C:\Temp\tmp\ps2_keyboard\implementation\system.ngc 1349784079
+C:/Temp/tmp/ps2_keyboard/implementation/system_dip_switches_8bits_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_rs232_uart_1_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_digilent_usb_epp_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_clock_generator_0_wrapper.ngc 1349784063
+C:/Temp/tmp/ps2_keyboard/implementation/system_proc_sys_reset_0_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_microblaze_0_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_mb_plb_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_ilmb_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_dlmb_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_dlmb_cntlr_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_ilmb_cntlr_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_leds_8bits_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_digilent_sevseg_disp_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_mdm_0_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_ps2_keyboard_0_wrapper.ngc 1349784059
+C:/Temp/tmp/ps2_keyboard/implementation/system_lmb_bram_wrapper.ngc 1349784045
+C:/Temp/tmp/ps2_keyboard/implementation/system_mem_bus_mux_0_wrapper.ngc 1349784045
+OK

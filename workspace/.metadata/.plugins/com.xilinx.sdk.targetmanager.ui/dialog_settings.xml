@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="C:\Temp\tmp\workspace\ps2_keyboard_hw_platform\system.bit" key="ps2_keyboard_hw_platform-bitFile"/>
+	<item value="C:\Temp\tmp\workspace\hello_sevseg\Debug\hello_sevseg.elf" key="ps2_keyboard_hw_platform-microblaze_0-initElf"/>
+	<item value="C:\Temp\tmp\workspace\ps2_keyboard_hw_platform\system_bd.bmm" key="ps2_keyboard_hw_platform-bmmFile"/>
+</section>

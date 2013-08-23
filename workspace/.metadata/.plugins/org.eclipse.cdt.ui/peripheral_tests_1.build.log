@@ -1,0 +1,60 @@
+
+**** Build of configuration Debug for project peripheral_tests_1 ****
+
+make all 
+Building file: ../src/testperiph.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/testperiph.d" -MT"src/testperiph.d" -o"src/testperiph.o" "../src/testperiph.c"
+Finished building: ../src/testperiph.c
+' '
+Building file: ../src/xgpio_tapp_example.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/xgpio_tapp_example.d" -MT"src/xgpio_tapp_example.d" -o"src/xgpio_tapp_example.o" "../src/xgpio_tapp_example.c"
+../src/xgpio_tapp_example.c: In function 'GpioOutputExample':
+../src/xgpio_tapp_example.c:185:6: warning: unused variable 'Data' [-Wunused-variable]
+Finished building: ../src/xgpio_tapp_example.c
+' '
+Building file: ../src/xintc_tapp_example.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/xintc_tapp_example.d" -MT"src/xintc_tapp_example.d" -o"src/xintc_tapp_example.o" "../src/xintc_tapp_example.c"
+Finished building: ../src/xintc_tapp_example.c
+' '
+Building file: ../src/xtmrctr_intr_example.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/xtmrctr_intr_example.d" -MT"src/xtmrctr_intr_example.d" -o"src/xtmrctr_intr_example.o" "../src/xtmrctr_intr_example.c"
+Finished building: ../src/xtmrctr_intr_example.c
+' '
+Building file: ../src/xtmrctr_selftest_example.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/xtmrctr_selftest_example.d" -MT"src/xtmrctr_selftest_example.d" -o"src/xtmrctr_selftest_example.o" "../src/xtmrctr_selftest_example.c"
+Finished building: ../src/xtmrctr_selftest_example.c
+' '
+Building file: ../src/xuartlite_selftest_example.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../peripheral_tests_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/xuartlite_selftest_example.d" -MT"src/xuartlite_selftest_example.d" -o"src/xuartlite_selftest_example.o" "../src/xuartlite_selftest_example.c"
+Finished building: ../src/xuartlite_selftest_example.c
+' '
+Building target: peripheral_tests_1.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,--no-relax -Wl,-T -Wl,../src/lscript.ld -L../../peripheral_tests_bsp_0/microblaze_0/lib -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -o"peripheral_tests_1.elf"  ./src/testperiph.o ./src/xgpio_tapp_example.o ./src/xintc_tapp_example.o ./src/xtmrctr_intr_example.o ./src/xtmrctr_selftest_example.o ./src/xuartlite_selftest_example.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: peripheral_tests_1.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size peripheral_tests_1.elf  |tee "peripheral_tests_1.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  21094	    452	   2312	  23858	   5d32	peripheral_tests_1.elf
+Finished building: peripheral_tests_1.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck peripheral_tests_1.elf -hw ../../only_ps2_interface_hw_platform/system.xml -pe microblaze_0  |tee "peripheral_tests_1.elf.elfcheck"
+elfcheck
+Xilinx EDK 14.2 Build EDK_P.28xd
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../only_ps2_interface_hw_platform/system.xml -pe
+microblaze_0 peripheral_tests_1.elf 
+
+ELF file	: peripheral_tests_1.elf
+elfcheck passed.
+Finished building: peripheral_tests_1.elf.elfcheck
+' '

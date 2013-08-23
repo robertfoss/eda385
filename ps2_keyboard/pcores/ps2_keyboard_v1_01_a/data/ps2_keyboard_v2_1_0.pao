@@ -1,0 +1,15 @@
+##############################################################################
+## Filename:          C:\Temp\tmp\ps2_keyboard\pcores/ps2_keyboard_v1_01_a/data/ps2_keyboard_v2_1_0.pao
+## Description:       Peripheral Analysis Order
+## Date:              Sun Oct 07 15:48:17 2012 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+lib proc_common_v3_00_a all vhdl
+lib plbv46_slave_single_v1_01_a all vhdl
+lib ps2_keyboard_v1_00_a user_logic vhdl
+lib ps2_keyboard_v1_00_a ps2_keyboard vhdl
+lib ps2_keyboard_v1_01_a convert_scancode vhdl
+lib ps2_keyboard_v1_01_a detect_falling_edge vhdl
+lib ps2_keyboard_v1_01_a keyboard_top vhdl
+lib ps2_keyboard_v1_01_a output_logic vhdl
+lib ps2_keyboard_v1_01_a sync_keyboard vhdl

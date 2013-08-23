@@ -1,0 +1,496 @@
+/* $Id: ps2_intr_example.c,v 1.1.2.2 2011/02/04 08:38:46 svemula Exp $*/
+/******************************************************************************
+ *
+ * (c) Copyright 2008-2011 Xilinx, Inc. All rights reserved.
+ *
+ * This file contains confidential and proprietary information of Xilinx, Inc.
+ * and is protected under U.S. and international copyright and other
+ * intellectual property laws.
+ *
+ * DISCLAIMER
+ * This disclaimer is not a license and does not grant any rights to the
+ * materials distributed herewith. Except as otherwise provided in a valid
+ * license issued to you by Xilinx, and to the maximum extent permitted by
+ * applicable law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL
+ * FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS,
+ * IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
+ * MERCHANTABILITY, NON-INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE;
+ * and (2) Xilinx shall not be liable (whether in contract or tort, including
+ * negligence, or under any other theory of liability) for any loss or damage
+ * of any kind or nature related to, arising under or in connection with these
+ * materials, including for any direct, or any indirect, special, incidental,
+ * or consequential loss or damage (including loss of data, profits, goodwill,
+ * or any type of loss or damage suffered as a result of any action brought by
+ * a third party) even if such damage or loss was reasonably foreseeable or
+ * Xilinx had been advised of the possibility of the same.
+ *
+ * CRITICAL APPLICATIONS
+ * Xilinx products are not designed or intended to be fail-safe, or for use in
+ * any application requiring fail-safe performance, such as life-support or
+ * safety devices or systems, Class III medical devices, nuclear facilities,
+ * applications related to the deployment of airbags, or any other applications
+ * that could lead to death, personal injury, or severe property or
+ * environmental damage (individually and collectively, "Critical
+ * Applications"). Customer assumes the sole risk and liability of any use of
+ * Xilinx products in Critical Applications, subject only to applicable laws
+ * and regulations governing limitations on product liability.
+ *
+ * THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE
+ * AT ALL TIMES.
+ *
+ ******************************************************************************/
+/****************************************************************************/
+/**
+ *
+ * @file ps2_intr_example.c
+ *
+ * This file contains a design example using the driver functions of the PS/2
+ * driver. This example shows the usage of the driver/device in interrupt mode
+ * to send data to a PS/2 keyboard and also to receive data from a PS/2 keyboard.
+ *
+ * This example sends data to the PS/2 keyboard. This example also displays the
+ * scan codes of the keys pressed on the keyboard.
+ *
+ * @note
+ *
+ * This example assumes that no operating system is being used. This example
+ * also assumes that there is a UART/STDIO Device and an interrupt controller
+ * Device in the hardware system.
+ *
+ * The PS/2 driver does not implement the PS/2 command set, the application using
+ * the driver should implement the required PS/2 commands.
+ * This example will only work with a PS/2 keyboard. This example will not work
+ * with a PS/2 mouse, the user needs to implement the required PS/2 command set
+ * to make it to work with a PS/2 mouse.
+ *
+ * <pre>
+ *
+ * MODIFICATION HISTORY:
+ *
+ * Ver   Who    Date     Changes
+ * ----- -----  -------- -----------------------------------------------------
+ * 1.00a sv     01/11/08 First release
+ * 1.01a sv     04/15/09 Updated the notes that this example does not work
+ *                       with a PS/2 mouse
+ * 2.00a ktn    10/22/09 Updated driver to use the HAL Processor APIs.
+ *
+ * </pre>
+ *
+ *****************************************************************************/
+
+/***************************** Include Files ********************************/
+
+#include "xparameters.h"
+#include "xstatus.h"
+#include "xintc.h"
+#include "stdio.h"
+#include "xps2.h"
+#include "xil_exception.h"
+
+/************************** Constant Definitions ****************************/
+
+/*
+ * The following constants map to the XPAR parameters created in the
+ * xparameters.h file. They are defined here such that a user can easily
+ * change all the needed parameters in one place.
+ */
+#define PS2_DEVICE_ID		XPAR_PS2_0_DEVICE_ID
+#define INTC_DEVICE_ID		XPAR_INTC_0_DEVICE_ID
+#define INTR_ID			XPAR_INTC_0_PS2_0_IP2INTC_IRPT_1_VEC_ID
+
+/**************************** Type Definitions ******************************/
+
+/***************** Macros (Inline Functions) Definitions ********************/
+
+#define TOTAL_TEST_BYTES	9 	/* Total Number of bytes to be
+						transmitted/received */
+#define printf xil_printf	   	/* A smaller footprint printf */
+
+/************************** Function Prototypes *****************************/
+
+int Ps2IntrExample(XIntc* IntcInstPtr, XPs2* Ps2InstPtr,
+		u16 Ps2DeviceId, u16 Ps2IntrId);
+
+static void Ps2IntrHandler(void *CallBackRef, u32 Event, u32 EventData);
+
+static int Ps2SetupIntrSystem(XIntc* IntcInstPtr, XPs2 *Ps2Ptr, u16 IntrId);
+
+/************************** Variable Definitions ****************************/
+
+static XPs2 Ps2Inst; 		/* Ps2 driver instance */
+static XIntc IntcInst; 		/* Instance of the XIntc driver. */
+
+/*
+ * Shared variables used to test the callbacks.
+ */
+volatile static int RxDataRecv = FALSE; /* Flag to indicate Receive Data */
+volatile static int RxError = FALSE; 	/* Flag to indicate Receive Error */
+volatile static int RxOverFlow = FALSE; /* Flag to indicate Receive Overflow */
+volatile static int TxDataSent = FALSE; /* Flag to indicate Tx Data sent */
+volatile static int TxNoAck = FALSE;    /* Flag to indicate Tx No Ack */
+volatile static int TimeOut = FALSE;    /* Flag to indicate Watchdog Timeout */
+volatile static int TxNumBytes = 0;	/* Number of bytes transmitted */
+volatile static int RxNumBytes = 0;     /* Number of bytes received */
+
+/*
+ * Transmit Buffer.
+ */
+u8 TxBuffer[TOTAL_TEST_BYTES];
+/*
+ * Receive Buffer.
+ */
+u8 RxBuffer[TOTAL_TEST_BYTES];
+
+
+/****************************************************************************/
+/**
+ *
+ * Main function that invokes the PS/2 Interrupt example.
+ *
+ * @param	None.
+ *
+ * @return
+ *		- XST_SUCCESS if the example has completed successfully.
+ *		- XST_FAILURE if the example has failed.
+ *
+ * @note		None.
+ *
+ *****************************************************************************/
+int main(void)
+{
+
+	int Status;
+
+	/*
+	 * Run the Ps2 interrupt example, specify the parameters that
+	 * are generated in xparameters.h.
+	 */
+	Status = Ps2IntrExample(&IntcInst, &Ps2Inst,
+			PS2_DEVICE_ID, INTR_ID);
+	if (Status != XST_SUCCESS) {
+		printf("\r\nXST_FAILURE\r\n");
+		return XST_FAILURE;
+	}
+	return XST_SUCCESS;
+
+}
+
+/****************************************************************************/
+/**
+ *
+ * This function runs a interrupt mode test on the PS/2 device using the driver
+ * APIs.
+ *
+ *
+ * @param	IntcInstPtr is a pointer to the Interrupt Controller driver
+ *		Instance.
+ * @param	Ps2InstPtr is a pointer to the XPs2 driver Instance.
+ * @param	Ps2DeviceId is the XPAR_<PS2_instance>_DEVICE_ID value
+ *		from xparameters.h.
+ * @param	Ps2IntrId is XPAR_<INTC_instance>_<PS2_instance>_VEC_ID
+ *		value from xparameters.h.
+ * @return
+ *		- XST_SUCCESS if the example has completed successfully.
+ *		- XST_FAILURE if the example has failed.
+ *
+ * @note		This function may never return if the interrupts do not occur.
+ *
+ ****************************************************************************/
+int Ps2IntrExample(XIntc* IntcInstPtr, XPs2* Ps2InstPtr,
+		u16 Ps2DeviceId, u16 Ps2IntrId)
+{
+	int Status;
+	XPs2_Config *ConfigPtr;
+	u32 Index;
+	u32 BytesSent;
+	u32 BytesReceived;
+
+	/*
+	 * Initialize the PS/2 driver.
+	 */
+	ConfigPtr = XPs2_LookupConfig(Ps2DeviceId);
+	if (ConfigPtr == NULL) {
+		return XST_FAILURE;
+	}
+	XPs2_CfgInitialize(Ps2InstPtr, ConfigPtr, ConfigPtr->BaseAddress);
+
+	/*
+	 * Self Test the PS/2 device.
+	 */
+	Status = XPs2_SelfTest(Ps2InstPtr);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Setup the interrupt system.
+	 */
+	Status = Ps2SetupIntrSystem(&IntcInst, &Ps2Inst, INTR_ID);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Set the Handler.
+	 */
+	XPs2_SetHandler(&Ps2Inst, (XPs2_Handler)Ps2IntrHandler, &Ps2Inst);
+
+	/*
+	 * Enable the Receive interrupts and the global interrupt in the PS/2
+	 * device.
+	 */
+	XPs2_IntrEnable(&Ps2Inst, XPS2_IPIXR_RX_ALL);
+	XPs2_IntrGlobalEnable(&Ps2Inst);
+
+	printf("\r\nPS/2 Demo using Interrupt Mode\r\n");
+
+//	/*
+//	 * Initialize the flags that are set in the Interrupt Callback
+//	 * function.
+//	 */
+//	TxDataSent = FALSE;
+//	TxNumBytes = 0;
+//
+//	/*
+//	 * Prepare the Transmit Buffer.
+//	 */
+//	for (Index = 0; Index < TOTAL_TEST_BYTES; Index++) {
+//		TxBuffer[Index] = Index;
+//	}
+//
+//	/*
+//	 * Send the data to a PS/2 keyboard.
+//	 */
+//	printf("Transmitting some bytes to the PS/2 device \r\n");
+//	BytesSent = XPs2_Send(&Ps2Inst, TxBuffer, TOTAL_TEST_BYTES);
+//
+//
+//	/*
+//	 * Wait till the Transmission of the data is complete.
+//	 */
+//	while (TxDataSent != TRUE);
+//
+//	/*
+//	 * Check whether the Transmitted number of bytes are correct.
+//	 */
+//	if ((TxNumBytes != TOTAL_TEST_BYTES)) {
+//		return XST_FAILURE;
+//	}
+//
+//	printf("Transmission to the PS/2 device complete \r\n");
+
+
+
+	/*
+	 * Wait till the Reception of the data is complete.
+	 */
+	while(TRUE){
+
+		printf("\r\n Press Keys on the keyboard \r\n");
+
+		/*
+		 * Initialize the flags that are set in the Interrupt Callback
+		 * function.
+		 */
+		RxDataRecv = FALSE;
+		RxNumBytes = 0x0;
+
+		/*
+		 * Receive the data from a PS/2 keyboard.
+		 */
+		BytesReceived = XPs2_Recv(&Ps2Inst, RxBuffer, TOTAL_TEST_BYTES);
+		printf("\r\n  Wait for received  \r\n");
+		while (RxDataRecv != TRUE);
+		/*
+		 * Check whether the Received number of bytes are correct.
+		 */
+		if ((RxNumBytes != TOTAL_TEST_BYTES)) {
+			return XST_FAILURE;
+		}
+		printf("Echoing PS/2 scancodes from a PS/2 input device \r\n");
+		for (Index = 0; Index < TOTAL_TEST_BYTES; Index++) {
+			printf ("%x \r\n", RxBuffer[Index]);
+		}
+	}
+
+	/*
+	 * Disable all the PS/2 interrupts and Disable the Global Interrupt.
+	 */
+	XPs2_IntrDisable(&Ps2Inst, XPS2_IPIXR_ALL);
+	XPs2_IntrGlobalDisable(&Ps2Inst);
+
+	return XST_SUCCESS;
+}
+
+
+/*****************************************************************************/
+/**
+ *
+ * This function is the Callback for the PS/2 device.
+ * It will be called by the processor whenever an interrupt is asserted
+ * by the device to handle the following interrupts :
+ *	- Receive Data Interrupt
+ *	- Receive Error Interrupt
+ *	- Receive Overflow Interrupt
+ *	- Transmit Data Interrupt
+ *	- Transmit No ACK Interrupt
+ *	- Watchdog Timeout Interrupt
+ *
+ * @param 	CallBackRef is a callback reference passed in by the upper layer
+ *		when setting the handler, and is passed back to the upper layer
+ * 		when the handler is called.
+ * @param	IntrMask is a bit mask indicating the event interrupts that have
+ *		occurred. Use the defines XPS2_IPIXR_* in xps2_l.h to interpret
+ *		the interrupts that have occurred:
+ *		- XPS2_IPIXR_RX_FULL for Receive Data Interrupt
+ *		- XPS2_IPIXR_RX_ERR for Receive Error Interrupt
+ *		- XPS2_IPIXR_RX_OVF for Receive Overflow Interrupt
+ *		- XPS2_IPIXR_TX_ACK for Transmit Data Interrupt
+ *		- XPS2_IPIXR_TX_NOACK for Transmit No ACK Interrupt
+ *		- XPS2_IPIXR_WDT_TOUT for Watchdog Timeout Interrupt
+ * @param 	ByteCount contains the number of bytes sent or received at the
+ * 		time of the call.
+ *
+ * @return	None.
+ *
+ * @note		None.
+ *
+ ******************************************************************************/
+static void Ps2IntrHandler(void *CallBackRef, u32 IntrMask, u32 ByteCount)
+{
+	printf("\r\n IntrMask = %lu \r\n", IntrMask);
+	if (IntrMask & XPS2_IPIXR_RX_FULL) {
+		/*
+		 * Data is Received.
+		 */
+		printf("\r\n  full  \r\n");
+		RxDataRecv = TRUE;
+		RxNumBytes = ByteCount;
+	}
+
+	if (IntrMask & XPS2_IPIXR_RX_ERR) {
+		/*
+		 * Receive Error.
+		 */
+		printf("\r\n  error  \r\n");
+		RxError = TRUE;
+
+	}
+
+	if (IntrMask & XPS2_IPIXR_RX_OVF) {
+		/*
+		 * Receive overflow.
+		 */
+		printf("\r\n  overflow  \r\n");
+		RxOverFlow = TRUE;
+	}
+
+	if (IntrMask & XPS2_IPIXR_TX_ACK) {
+		/*
+		 * Transmission of the specified data is completed.
+		 */
+		printf("\r\n  transmit ack  \r\n");
+		TxDataSent = TRUE;
+		TxNumBytes = ByteCount;
+	}
+
+	if (IntrMask & XPS2_IPIXR_TX_NOACK) {
+		/*
+		 * Transmit NO ACK.
+		 */
+		printf("\r\n  transmit noack  \r\n");
+		TxNoAck = TRUE;
+	}
+
+	if (IntrMask & XPS2_IPIXR_WDT_TOUT) {
+		/*
+		 * Transmit Timeout.
+		 */
+		printf("\r\n  timeout  \r\n");
+		TimeOut = TRUE;
+	}
+
+}
+
+/****************************************************************************/
+/**
+ *
+ * This function sets up the interrupt system so interrupts can occur for the
+ * Ps2. The function is application specific since the actual system may or may
+ * not have an interrupt controller. The Ps2 device could be directly connected
+ * to a processor without an interrupt controller.
+ * The user should modify this function to fit the application.
+ *
+ * @param	IntcInstPtr is a pointer to the Interrupt Controller
+ *		driver Instance.
+ * @param	Ps2Ptr is a pointer to the driver instance of the Ps2 device.
+ *		which is going to be connected to the interrupt controller
+ * @param	IntrId is XPAR_<INTC_instance>_<PS2_instance>_VEC_ID value
+ *		from xparameters.h.
+ *
+ * @return	XST_SUCCESS if successful, or XST_FAILURE.
+ *
+ * @note		None.
+ *
+ *
+ ****************************************************************************/
+static int Ps2SetupIntrSystem(XIntc* IntcInstPtr, XPs2 *Ps2Ptr, u16 IntrId )
+{
+	int Status;
+
+	/*
+	 * Initialize the interrupt controller driver so that it's ready to use.
+	 */
+	Status = XIntc_Initialize(IntcInstPtr, INTC_DEVICE_ID);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Connect the handler that will be called when an interrupt
+	 * for the device occurs, the handler defined above performs the
+	 * specific interrupt processing for the device.
+	 */
+	Status = XIntc_Connect(IntcInstPtr,
+			IntrId,
+			(XInterruptHandler) XPs2_IntrHandler,
+			Ps2Ptr);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Start the interrupt controller so interrupts are enabled for all
+	 * devices that cause interrupts. Specify real mode so that the PS/2
+	 * device can cause interrupts through the interrupt controller.
+	 */
+	Status = XIntc_Start(IntcInstPtr, XIN_REAL_MODE);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	/*
+	 * Enable the interrupt for the Ps2 device.
+	 */
+	XIntc_Enable(IntcInstPtr, IntrId);
+
+	/*
+	 * Initialize the exception table.
+	 */
+	Xil_ExceptionInit();
+
+	/*
+	 * Register the interrupt controller handler with the exception table.
+	 */
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+			(Xil_ExceptionHandler) XIntc_InterruptHandler,
+			IntcInstPtr);
+
+	/*
+	 * Enable the exceptions.
+	 */
+	Xil_ExceptionEnable();
+
+
+	return XST_SUCCESS;
+}

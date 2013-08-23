@@ -1,0 +1,26 @@
+#Tue Oct 09 13:54:29 CEST 2012
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.rodata=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.sbss2=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.bss=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:Heap=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.sdata=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.text=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.data=ilmb_cntlr_dlmb_cntlr
+eclipse.preferences.version=1
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.sbss=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:Heap-size=4096
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:Stack-size=2048
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:Stack=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.sbss2=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:Heap=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.sdata2=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.data=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.rodata=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.sbss=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:Stack-size=1024
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:.bss=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.sdata=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:Heap-size=4096
+com.xilinx.sdk.linkgen.prefs.hello_world_0\:Stack=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.text=ilmb_cntlr_dlmb_cntlr
+com.xilinx.sdk.linkgen.prefs.hello_sevseg\:.sdata2=ilmb_cntlr_dlmb_cntlr

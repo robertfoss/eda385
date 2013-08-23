@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;peripheral_tests_0/src/ps2_intr_example&apos; to &apos;ps2_intr_example.c&apos;" description="Rename resource &apos;ps2_intr_example&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/ps2_intr_example" name="ps2_intr_example.c" stamp="1348219114959" updateReferences="true"/>
+</session>

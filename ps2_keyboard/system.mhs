@@ -1,0 +1,259 @@
+
+# ##############################################################################
+# Created by Base System Builder Wizard for Xilinx EDK 14.2 Build EDK_P.28xd
+# Tue Oct 09 11:22:13 2012
+# Target Board:  Digilent Nexys 3 Board Rev B
+# Family:    spartan6
+# Device:    xc6slx16
+# Package:   csg324
+# Speed Grade:  -3
+# Processor number: 1
+# Processor 1: microblaze_0
+# System clock frequency: 50.0
+# Debug Interface: On-Chip HW Debug Module
+# ##############################################################################
+ PARAMETER VERSION = 2.1.0
+
+
+ PORT fpga_0_RS232_Uart_1_RX_pin = fpga_0_RS232_Uart_1_RX_pin, DIR = I
+ PORT fpga_0_RS232_Uart_1_TX_pin = fpga_0_RS232_Uart_1_TX_pin, DIR = O
+ PORT fpga_0_DIP_Switches_8Bits_GPIO_IO_I_pin = fpga_0_DIP_Switches_8Bits_GPIO_IO_I_pin, DIR = I, VEC = [0:7]
+ PORT fpga_0_LEDs_8Bits_GPIO_IO_O_pin = fpga_0_LEDs_8Bits_GPIO_IO_O_pin, DIR = O, VEC = [0:7]
+ PORT fpga_0_Digilent_Usb_Epp_IFCLK_pin = fpga_0_Digilent_Usb_Epp_IFCLK_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_STMEN_pin = fpga_0_Digilent_Usb_Epp_STMEN_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_FLAGA_pin = fpga_0_Digilent_Usb_Epp_FLAGA_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_FLAGB_pin = fpga_0_Digilent_Usb_Epp_FLAGB_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_FLAGC_pin = fpga_0_Digilent_Usb_Epp_FLAGC_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_SLRD_pin = fpga_0_Digilent_Usb_Epp_SLRD_pin, DIR = O
+ PORT fpga_0_Digilent_Usb_Epp_SLWR_pin = fpga_0_Digilent_Usb_Epp_SLWR_pin, DIR = O
+ PORT fpga_0_Digilent_Usb_Epp_SLOE_pin = fpga_0_Digilent_Usb_Epp_SLOE_pin, DIR = O
+ PORT fpga_0_Digilent_Usb_Epp_FIFOADR_pin = fpga_0_Digilent_Usb_Epp_FIFOADR_pin, DIR = O, VEC = [1:0]
+ PORT fpga_0_Digilent_Usb_Epp_PKTEND_pin = fpga_0_Digilent_Usb_Epp_PKTEND_pin, DIR = O
+ PORT fpga_0_Digilent_Usb_Epp_EPPRST_pin = fpga_0_Digilent_Usb_Epp_EPPRST_pin, DIR = I
+ PORT fpga_0_Digilent_Usb_Epp_DB_pin = fpga_0_Digilent_Usb_Epp_DB_pin, DIR = IO, VEC = [7:0]
+ PORT fpga_0_Digilent_SevSeg_Disp_AN_pin = fpga_0_Digilent_SevSeg_Disp_AN_pin, DIR = O, VEC = [3:0]
+ PORT fpga_0_Digilent_SevSeg_Disp_SEG_pin = fpga_0_Digilent_SevSeg_Disp_SEG_pin, DIR = O, VEC = [7:0]
+ PORT fpga_0_mem_bus_mux_0_MEM_ADDR_pin = fpga_0_mem_bus_mux_0_MEM_ADDR_pin, DIR = O, VEC = [0:22]
+ PORT fpga_0_mem_bus_mux_0_DQ_pin = fpga_0_mem_bus_mux_0_DQ_pin, DIR = IO, VEC = [0:15]
+ PORT fpga_0_mem_bus_mux_0_MEM_OEN_pin = fpga_0_mem_bus_mux_0_MEM_OEN_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_MEM_WEN_pin = fpga_0_mem_bus_mux_0_MEM_WEN_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_RAM_CEN_O_pin = fpga_0_mem_bus_mux_0_RAM_CEN_O_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_RAM_BEN_O_pin = fpga_0_mem_bus_mux_0_RAM_BEN_O_pin, DIR = O, VEC = [0:1]
+ PORT fpga_0_mem_bus_mux_0_FLASH_ADDR_pin = fpga_0_mem_bus_mux_0_FLASH_ADDR_pin, DIR = O, VEC = [5:7]
+ PORT fpga_0_mem_bus_mux_0_FLASH_CEN_O_pin = fpga_0_mem_bus_mux_0_FLASH_CEN_O_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_FLASH_RPN_O_pin = fpga_0_mem_bus_mux_0_FLASH_RPN_O_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_QUAD_SPI_C_O_pin = fpga_0_mem_bus_mux_0_QUAD_SPI_C_O_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_QUAD_SPI_S_O_pin = fpga_0_mem_bus_mux_0_QUAD_SPI_S_O_pin, DIR = O
+ PORT fpga_0_mem_bus_mux_0_MOSI_QUAD_SPI_pin = fpga_0_mem_bus_mux_0_MOSI_QUAD_SPI_pin, DIR = IO
+ PORT fpga_0_clk_1_sys_clk_pin = CLK_S, DIR = I, SIGIS = CLK, CLK_FREQ = 100000000
+ PORT fpga_0_rst_1_sys_rst_pin = sys_rst_s, DIR = I, SIGIS = RST, RST_POLARITY = 1
+ PORT ps2_keyboard_0_ext_kb_clk_pin = net_ps2_keyboard_0_ext_kb_clk_pin, DIR = IO
+ PORT ps2_keyboard_0_ext_kb_data_pin = net_ps2_keyboard_0_ext_kb_data_pin, DIR = IO
+ PORT ps2_keyboard_0_ext_keys_pressed_pin = net_ps2_keyboard_0_ext_keys_pressed_pin, DIR = O, VEC = [31:0]
+ PORT ps2_keyboard_0_ext_sync_kb_clk_out_pin = net_ps2_keyboard_0_ext_sync_kb_clk_out_pin, DIR = O
+ PORT ps2_keyboard_0_ext_sync_kb_data_out_pin = net_ps2_keyboard_0_ext_sync_kb_data_out_pin, DIR = O
+
+
+BEGIN microblaze
+ PARAMETER INSTANCE = microblaze_0
+ PARAMETER C_USE_BARREL = 1
+ PARAMETER C_DEBUG_ENABLED = 1
+ PARAMETER HW_VER = 8.40.a
+ BUS_INTERFACE DLMB = dlmb
+ BUS_INTERFACE ILMB = ilmb
+ BUS_INTERFACE DPLB = mb_plb
+ BUS_INTERFACE IPLB = mb_plb
+ BUS_INTERFACE DEBUG = microblaze_0_mdm_bus
+ PORT MB_RESET = mb_reset
+END
+
+BEGIN plb_v46
+ PARAMETER INSTANCE = mb_plb
+ PARAMETER HW_VER = 1.05.a
+ PORT PLB_Clk = clk_50_0000MHz
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_v10
+ PARAMETER INSTANCE = ilmb
+ PARAMETER HW_VER = 2.00.b
+ PORT LMB_Clk = clk_50_0000MHz
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_v10
+ PARAMETER INSTANCE = dlmb
+ PARAMETER HW_VER = 2.00.b
+ PORT LMB_Clk = clk_50_0000MHz
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_bram_if_cntlr
+ PARAMETER INSTANCE = dlmb_cntlr
+ PARAMETER HW_VER = 3.10.a
+ PARAMETER C_BASEADDR = 0x00000000
+ PARAMETER C_HIGHADDR = 0x00007fff
+ BUS_INTERFACE SLMB = dlmb
+ BUS_INTERFACE BRAM_PORT = dlmb_port
+END
+
+BEGIN lmb_bram_if_cntlr
+ PARAMETER INSTANCE = ilmb_cntlr
+ PARAMETER HW_VER = 3.10.a
+ PARAMETER C_BASEADDR = 0x00000000
+ PARAMETER C_HIGHADDR = 0x00007fff
+ BUS_INTERFACE SLMB = ilmb
+ BUS_INTERFACE BRAM_PORT = ilmb_port
+END
+
+BEGIN bram_block
+ PARAMETER INSTANCE = lmb_bram
+ PARAMETER HW_VER = 1.00.a
+ BUS_INTERFACE PORTA = ilmb_port
+ BUS_INTERFACE PORTB = dlmb_port
+END
+
+BEGIN xps_uartlite
+ PARAMETER INSTANCE = RS232_Uart_1
+ PARAMETER C_BAUDRATE = 9600
+ PARAMETER C_DATA_BITS = 8
+ PARAMETER C_USE_PARITY = 0
+ PARAMETER C_ODD_PARITY = 0
+ PARAMETER HW_VER = 1.02.a
+ PARAMETER C_BASEADDR = 0x84000000
+ PARAMETER C_HIGHADDR = 0x8400ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT RX = fpga_0_RS232_Uart_1_RX_pin
+ PORT TX = fpga_0_RS232_Uart_1_TX_pin
+END
+
+BEGIN xps_gpio
+ PARAMETER INSTANCE = DIP_Switches_8Bits
+ PARAMETER C_ALL_INPUTS = 1
+ PARAMETER C_GPIO_WIDTH = 8
+ PARAMETER C_INTERRUPT_PRESENT = 0
+ PARAMETER C_IS_DUAL = 0
+ PARAMETER HW_VER = 2.00.a
+ PARAMETER C_BASEADDR = 0x81420000
+ PARAMETER C_HIGHADDR = 0x8142ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT GPIO_IO_I = fpga_0_DIP_Switches_8Bits_GPIO_IO_I_pin
+END
+
+BEGIN xps_gpio
+ PARAMETER INSTANCE = LEDs_8Bits
+ PARAMETER C_ALL_INPUTS = 0
+ PARAMETER C_GPIO_WIDTH = 8
+ PARAMETER C_INTERRUPT_PRESENT = 0
+ PARAMETER C_IS_DUAL = 0
+ PARAMETER HW_VER = 2.00.a
+ PARAMETER C_BASEADDR = 0x81400000
+ PARAMETER C_HIGHADDR = 0x8140ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT GPIO_IO_O = fpga_0_LEDs_8Bits_GPIO_IO_O_pin
+END
+
+BEGIN d_usb_epp_dstm
+ PARAMETER INSTANCE = Digilent_Usb_Epp
+ PARAMETER C_NUM_USER_REGS = 256
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xcbc00000
+ PARAMETER C_HIGHADDR = 0xcbc0ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IFCLK = fpga_0_Digilent_Usb_Epp_IFCLK_pin
+ PORT STMEN = fpga_0_Digilent_Usb_Epp_STMEN_pin
+ PORT FLAGA = fpga_0_Digilent_Usb_Epp_FLAGA_pin
+ PORT FLAGB = fpga_0_Digilent_Usb_Epp_FLAGB_pin
+ PORT FLAGC = fpga_0_Digilent_Usb_Epp_FLAGC_pin
+ PORT SLRD = fpga_0_Digilent_Usb_Epp_SLRD_pin
+ PORT SLWR = fpga_0_Digilent_Usb_Epp_SLWR_pin
+ PORT SLOE = fpga_0_Digilent_Usb_Epp_SLOE_pin
+ PORT FIFOADR = fpga_0_Digilent_Usb_Epp_FIFOADR_pin
+ PORT PKTEND = fpga_0_Digilent_Usb_Epp_PKTEND_pin
+ PORT EPPRST = fpga_0_Digilent_Usb_Epp_EPPRST_pin
+ PORT DB = fpga_0_Digilent_Usb_Epp_DB_pin
+END
+
+BEGIN ssg_decoder
+ PARAMETER INSTANCE = Digilent_SevSeg_Disp
+ PARAMETER ANODE_ACTIVE_LOW = 1
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xcd600000
+ PARAMETER C_HIGHADDR = 0xcd60ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT AN = fpga_0_Digilent_SevSeg_Disp_AN_pin
+ PORT SEG = fpga_0_Digilent_SevSeg_Disp_SEG_pin
+END
+
+BEGIN mem_bus_mux
+ PARAMETER INSTANCE = mem_bus_mux_0
+ PARAMETER HW_VER = 1.00.a
+ PORT MEM_ADDR = fpga_0_mem_bus_mux_0_MEM_ADDR_pin
+ PORT DQ = fpga_0_mem_bus_mux_0_DQ_pin
+ PORT MEM_OEN = fpga_0_mem_bus_mux_0_MEM_OEN_pin
+ PORT MEM_WEN = fpga_0_mem_bus_mux_0_MEM_WEN_pin
+ PORT RAM_CEN_O = fpga_0_mem_bus_mux_0_RAM_CEN_O_pin
+ PORT RAM_BEN_O = fpga_0_mem_bus_mux_0_RAM_BEN_O_pin
+ PORT FLASH_ADDR = fpga_0_mem_bus_mux_0_FLASH_ADDR_pin
+ PORT FLASH_CEN_O = fpga_0_mem_bus_mux_0_FLASH_CEN_O_pin
+ PORT FLASH_RPN_O = fpga_0_mem_bus_mux_0_FLASH_RPN_O_pin
+ PORT QUAD_SPI_C_O = fpga_0_mem_bus_mux_0_QUAD_SPI_C_O_pin
+ PORT QUAD_SPI_S_O = fpga_0_mem_bus_mux_0_QUAD_SPI_S_O_pin
+ PORT MOSI_QUAD_SPI = fpga_0_mem_bus_mux_0_MOSI_QUAD_SPI_pin
+END
+
+BEGIN clock_generator
+ PARAMETER INSTANCE = clock_generator_0
+ PARAMETER C_CLKIN_FREQ = 100000000
+ PARAMETER C_CLKOUT0_FREQ = 50000000
+ PARAMETER C_CLKOUT0_PHASE = 0
+ PARAMETER C_CLKOUT0_GROUP = NONE
+ PARAMETER C_CLKOUT0_BUF = TRUE
+ PARAMETER C_EXT_RESET_HIGH = 1
+ PARAMETER HW_VER = 4.03.a
+ PORT CLKIN = CLK_S
+ PORT CLKOUT0 = clk_50_0000MHz
+ PORT RST = sys_rst_s
+ PORT LOCKED = Dcm_all_locked
+END
+
+BEGIN mdm
+ PARAMETER INSTANCE = mdm_0
+ PARAMETER C_MB_DBG_PORTS = 1
+ PARAMETER C_USE_UART = 1
+ PARAMETER HW_VER = 2.10.a
+ PARAMETER C_BASEADDR = 0x84400000
+ PARAMETER C_HIGHADDR = 0x8440ffff
+ BUS_INTERFACE SPLB = mb_plb
+ BUS_INTERFACE MBDEBUG_0 = microblaze_0_mdm_bus
+ PORT Debug_SYS_Rst = Debug_SYS_Rst
+END
+
+BEGIN proc_sys_reset
+ PARAMETER INSTANCE = proc_sys_reset_0
+ PARAMETER C_EXT_RESET_HIGH = 1
+ PARAMETER HW_VER = 3.00.a
+ PORT Slowest_sync_clk = clk_50_0000MHz
+ PORT Ext_Reset_In = sys_rst_s
+ PORT MB_Debug_Sys_Rst = Debug_SYS_Rst
+ PORT Dcm_locked = Dcm_all_locked
+ PORT MB_Reset = mb_reset
+ PORT Bus_Struct_Reset = sys_bus_reset
+ PORT Peripheral_Reset = sys_periph_reset
+END
+
+BEGIN ps2_keyboard
+ PARAMETER INSTANCE = ps2_keyboard_0
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xcb600000
+ PARAMETER C_HIGHADDR = 0xcb60ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT ext_kb_clk = net_ps2_keyboard_0_ext_kb_clk_pin
+ PORT ext_kb_data = net_ps2_keyboard_0_ext_kb_data_pin
+ PORT ext_keys_pressed = net_ps2_keyboard_0_ext_kb_data_pin
+ PORT ext_clk = clk_50_0000MHz
+ PORT ext_rst = mb_reset
+ PORT ext_sync_kb_clk_out = net_ps2_keyboard_0_ext_sync_kb_clk_out_pin
+ PORT ext_sync_kb_data_out = net_ps2_keyboard_0_ext_sync_kb_data_out_pin
+END
+

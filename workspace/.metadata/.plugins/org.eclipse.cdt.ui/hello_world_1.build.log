@@ -1,0 +1,35 @@
+
+**** Build of configuration Debug for project hello_world_1 ****
+
+make all 
+Building file: ../src/helloworld.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -Wl,--no-relax -I../../hello_world_bsp_0/microblaze_0/include -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.d" -o"src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:33:9: warning: unused variable 'i' [-Wunused-variable]
+Finished building: ../src/helloworld.c
+' '
+Building target: hello_world_1.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,--no-relax -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp_0/microblaze_0/lib -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.40.a -mno-xl-soft-mul -o"hello_world_1.elf"  ./src/helloworld.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: hello_world_1.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size hello_world_1.elf  |tee "hello_world_1.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+   6450	    296	   2118	   8864	   22a0	hello_world_1.elf
+Finished building: hello_world_1.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck hello_world_1.elf -hw ../../ps2_keyboard_hw_platform/system.xml -pe microblaze_0  |tee "hello_world_1.elf.elfcheck"
+elfcheck
+Xilinx EDK 14.2 Build EDK_P.28xd
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../ps2_keyboard_hw_platform/system.xml -pe
+microblaze_0 hello_world_1.elf 
+
+ELF file	: hello_world_1.elf
+elfcheck passed.
+Finished building: hello_world_1.elf.elfcheck
+' '
